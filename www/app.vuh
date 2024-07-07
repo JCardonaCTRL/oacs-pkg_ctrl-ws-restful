@@ -1,0 +1,20 @@
+ns_set put [ad_conn outputheaders] "Access-Control-Allow-Origin" "*"
+ns_set put [ad_conn outputheaders] "Access-Control-Allow-Methods" "GET, POST, PATCH, FETCH, PUT, DELETE, OPTIONS"
+ns_set put [ad_conn outputheaders] "Access-Control-Allow-Headers:" "Content-Type, Authorization"
+
+set method [ad_conn method]
+
+set failed_p [catch {set result4 [ctrl::restful::process_request_url -package_id [ad_conn package_id] -request_url [ad_conn extra_url] -method $method]} errmsg]
+
+#if {$failed_p  != 0} {
+#   if ![ctrl::restful::ad_script_abort_p] {
+#       ns_log notice "ERROR : $errmsg"
+#        doc_return 500 application/json  [ctrl::restful::api_return -response_code "Server Error" -response_message "ERROR : $errmsg" -response_body ""]
+#    }
+#    ad_script_abort
+#}
+
+#set failed_p [catch {
+#	set result4 [ctrl::restful::api_return -response_code "ok" -response_message "" -response_body $result4]
+#	doc_return 200 application/json "$result4"
+#} errmsg] 

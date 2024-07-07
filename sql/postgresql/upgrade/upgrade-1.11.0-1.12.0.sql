@@ -1,0 +1,1 @@
+alter table shib_login_oauth_tokens add if not exists creation_date timestamp;
